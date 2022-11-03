@@ -61,7 +61,7 @@ class MainVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
                 
         let characterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as! CharacterViewCell
-        characterCell.characterNameLabel.text = characters[indexPath.item].name
+        characterCell.setupCell(character: characters[indexPath.item])
         
         return characterCell
     }

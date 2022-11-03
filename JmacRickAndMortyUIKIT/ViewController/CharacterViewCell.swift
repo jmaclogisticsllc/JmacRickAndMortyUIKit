@@ -17,7 +17,15 @@ class CharacterViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(characterNameLabel)
+        configureSubViews()
+    }
+    
+    func configureSubViews() {
+        addSubview(characterNameLabel)
+    }
+    
+    func setupCell(character: Result){
+        characterNameLabel.text = character.name
     }
     
 }
