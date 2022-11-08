@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let layout = UICollectionViewFlowLayout()
         window = UIWindow()
-        window?.rootViewController = MainVC(collectionViewLayout: layout)
+        window?.rootViewController = CharacterViewController(collectionViewLayout: layout)
         return true
     }
 

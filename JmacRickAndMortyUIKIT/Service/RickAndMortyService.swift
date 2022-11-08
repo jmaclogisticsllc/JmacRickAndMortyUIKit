@@ -11,9 +11,15 @@ enum CharacterError: Error {
     case invalidServerResponse
 }
 
+protocol RickAndMortyServiceDelegate {
+    func jsonData(results: [Result])
+}
+
 class RickAndMortyService {
     
-    func fetchCharacter(completionHanlder: @escaping ([Result]) -> Void) {
+    var delegate: RickAndMortyServiceDelegate?
+    
+    func fetchCharacter() {
         let urlString = "https://rickandmortyapi.com/api/character"
         
         let url = URL(string: urlString)!
@@ -21,7 +27,8 @@ class RickAndMortyService {
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             do {
                 let character = try JSONDecoder().decode(Character.self, from: data!)
-                completionHanlder(character.results)
+                self.delegate?.jsonData(results: character.results)
+                //completionHanlder(character.results)
 
             } catch {
                 print("DEBUG: Parsing Error")

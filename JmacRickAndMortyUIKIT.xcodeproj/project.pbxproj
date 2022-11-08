@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		E237BA012912BA97000EE349 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA002912BA97000EE349 /* AppDelegate.swift */; };
 		E237BA032912BA97000EE349 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA022912BA97000EE349 /* SceneDelegate.swift */; };
-		E237BA052912BA97000EE349 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA042912BA97000EE349 /* MainVC.swift */; };
+		E237BA052912BA97000EE349 /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA042912BA97000EE349 /* CharacterViewController.swift */; };
 		E237BA0A2912BA99000EE349 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E237BA092912BA99000EE349 /* Assets.xcassets */; };
 		E237BA0D2912BA99000EE349 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E237BA0B2912BA99000EE349 /* LaunchScreen.storyboard */; };
 		E237BA182912BA99000EE349 /* JmacRickAndMortyUIKITTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA172912BA99000EE349 /* JmacRickAndMortyUIKITTests.swift */; };
@@ -41,7 +41,7 @@
 		E237B9FD2912BA97000EE349 /* JmacRickAndMortyUIKIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JmacRickAndMortyUIKIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E237BA002912BA97000EE349 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E237BA022912BA97000EE349 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E237BA042912BA97000EE349 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		E237BA042912BA97000EE349 /* CharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewController.swift; sourceTree = "<group>"; };
 		E237BA092912BA99000EE349 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E237BA0C2912BA99000EE349 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E237BA0E2912BA99000EE349 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 		E237BA322912CEA1000EE349 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E237BA042912BA97000EE349 /* MainVC.swift */,
+				E237BA042912BA97000EE349 /* CharacterViewController.swift */,
 				E237BA382912ECF3000EE349 /* CharacterViewCell.swift */,
 			);
 			path = ViewController;
@@ -296,7 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E237BA392912ECF3000EE349 /* CharacterViewCell.swift in Sources */,
-				E237BA052912BA97000EE349 /* MainVC.swift in Sources */,
+				E237BA052912BA97000EE349 /* CharacterViewController.swift in Sources */,
 				E237BA012912BA97000EE349 /* AppDelegate.swift in Sources */,
 				E237BA372912CF15000EE349 /* RickAndMortyService.swift in Sources */,
 				E237BA032912BA97000EE349 /* SceneDelegate.swift in Sources */,
