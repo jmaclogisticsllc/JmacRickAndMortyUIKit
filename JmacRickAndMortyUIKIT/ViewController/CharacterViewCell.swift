@@ -41,8 +41,6 @@ class CharacterViewCell: UICollectionViewCell {
     }
     
     func setupCell(character: Result){
-//        characterNameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-
         characterNameLabel.text = character.name
     }
     

@@ -19,7 +19,7 @@ class RickAndMortyService {
     
     var delegate: RickAndMortyServiceDelegate?
     
-    func fetchCharacter() {
+    func fetchCharacter(completionHanlder: @escaping ([Result]) -> Void) {
         let urlString = "https://rickandmortyapi.com/api/character"
         
         let url = URL(string: urlString)!
@@ -27,8 +27,8 @@ class RickAndMortyService {
         let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
             do {
                 let character = try JSONDecoder().decode(Character.self, from: data!)
-                self.delegate?.jsonData(results: character.results)
-                //completionHanlder(character.results)
+                //self.delegate?.jsonData(results: character.results)
+                completionHanlder(character.results)
 
             } catch {
                 print("DEBUG: Parsing Error")

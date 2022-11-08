@@ -7,11 +7,9 @@
 
 import UIKit
 
-class CharacterViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, RickAndMortyServiceDelegate {
+class CharacterViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    
-    
-    //private let service: RickAndMortyService = RickAndMortyService()
+    private let service: RickAndMortyService = RickAndMortyService()
         
     // List of Characters
     var characters = [Result]()
@@ -30,45 +28,15 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
         // Call UIViewController
         super.viewDidLoad()
         
-        let service = RickAndMortyService()
-        service.delegate = self
-        
-        service.fetchCharacter()
-        
-        
-//        service.fetchCharacter { results in
-//            self.characters.append(contentsOf: results)
-//        }
+        service.fetchCharacter { results in
+            self.characters.append(contentsOf: results)
+        }
         
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CharacterViewCell.self, forCellWithReuseIdentifier: "characterCell")
         collectionView.backgroundColor = .green
     }
-    
-    func jsonData(results: [Result]) {
-        print("Delegate data")
-        print(results.count)
-        self.characters = results
-        print("END")
-    }
-    
-//    func fetchCharacter(completion: @escaping ([Result]) -> Void) {
-//
-//        let urlString = "https://rickandmortyapi.com/api/character"
-//
-//        let url = URL(string: urlString)!
-//
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            do {
-//                let character = try JSONDecoder().decode(Character.self, from: data!)
-//                completion(character.results)
-//            } catch {
-//                print("DEBUG: Parsing Error")
-//            }
-//        }
-//        .resume()
-//    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.characters.count
