@@ -9,19 +9,20 @@ import UIKit
 
 class CharacterViewCell: UICollectionViewCell {
     
-    let template: UIView = {
-        let uiview = UIView()
-        uiview.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        uiview.backgroundColor = .red
-        return uiview
-    }()
-    
      let characterNameLabel: UILabel = {
         let lb = UILabel()
         lb.text = ""
-        lb.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         lb.backgroundColor = .blue
         return lb
+    }()
+    
+    let characterImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "house")
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .yellow
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
 //    let characterNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -35,13 +36,22 @@ class CharacterViewCell: UICollectionViewCell {
         configureSubViews()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        characterNameLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        characterImage.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+    }
+    
     func configureSubViews() {
-        self.template.addSubview(characterNameLabel)
-        addSubview(template)
+        contentView.addSubview(characterImage)
+        contentView.addSubview(characterNameLabel)
+        contentView.clipsToBounds = true
+        
     }
     
     func setupCell(character: Result){
         characterNameLabel.text = character.name
+        characterImage.image = UIImage(named: character.image)
     }
     
 }

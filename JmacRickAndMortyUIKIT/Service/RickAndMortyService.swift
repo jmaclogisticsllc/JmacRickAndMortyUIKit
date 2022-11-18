@@ -19,7 +19,7 @@ class RickAndMortyService {
     
     var delegate: RickAndMortyServiceDelegate?
     
-    func fetchCharacter(completionHanlder: @escaping ([Result]) -> Void) {
+    func fetchCharacter(handler: @escaping ([Result]) -> Void) {
         let urlString = "https://rickandmortyapi.com/api/character"
         
         let url = URL(string: urlString)!
@@ -28,7 +28,7 @@ class RickAndMortyService {
             do {
                 let character = try JSONDecoder().decode(Character.self, from: data!)
                 //self.delegate?.jsonData(results: character.results)
-                completionHanlder(character.results)
+                handler(character.results)
 
             } catch {
                 print("DEBUG: Parsing Error")

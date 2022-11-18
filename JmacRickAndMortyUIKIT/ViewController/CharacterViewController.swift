@@ -14,6 +14,15 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
     // List of Characters
     var characters = [Result]()
     
+    override func loadView() {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.view = collectionView
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
@@ -46,12 +55,10 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
                 
         let characterCell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as! CharacterViewCell
         characterCell.setupCell(character: characters[indexPath.item])
+
         return characterCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
-    }
 }
 
 
