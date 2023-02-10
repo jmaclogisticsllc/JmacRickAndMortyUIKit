@@ -8,12 +8,27 @@
 import UIKit
 import Kingfisher
 
+protocol CharacterViewCellDelegate {
+    func didSelectCharacter(cell: CharacterViewCell, character: Result)
+}
+
 class CharacterViewCell: UICollectionViewCell {
+    
+    var delegate: CharacterViewCellDelegate?
+    
+    var character: Result?
+    
+    var characterName: String = "" {
+        didSet {
+            characterNameLabel.text = characterName
+        }
+    }
     
      let characterNameLabel: UILabel = {
         let lb = UILabel()
         lb.text = ""
         lb.backgroundColor = .blue
+        lb.translatesAutoresizingMaskIntoConstraints = false
         return lb
     }()
     
@@ -32,10 +47,9 @@ class CharacterViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureSubViews()
     }
+                                                
     
     func configureSubViews() {
-            characterNameLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-
             addSubview(characterImage)
             addSubview(characterNameLabel)
             clipsToBounds = true
@@ -46,7 +60,6 @@ class CharacterViewCell: UICollectionViewCell {
                 characterImage.leadingAnchor.constraint(equalTo: leadingAnchor),
                 characterImage.trailingAnchor.constraint(equalTo: trailingAnchor),
                 characterImage.bottomAnchor.constraint(equalTo: characterNameLabel.topAnchor),
-                characterImage.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.8)
             ])
             
             // Add constraints to the label
@@ -55,15 +68,22 @@ class CharacterViewCell: UICollectionViewCell {
                 characterNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
                 characterNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
                 characterNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-                characterNameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.2)
+                characterNameLabel.heightAnchor.constraint(equalToConstant: 50.0)
             ])
         }
     
-    func setupCell(character: Result){
+    func setupCell(character: Result) {
+        self.character = character
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        addGestureRecognizer(tapGesture)
         characterNameLabel.text = character.name
         print("This is the image: \(character.image)")
         let character_image = URL(string: character.image)
         characterImage.kf.setImage(with: character_image)
     }
     
+    @objc func handleTap(sender: UITapGestureRecognizer){
+        guard let delegate = delegate else { return }
+        delegate.didSelectCharacter(cell: self, character: character!)
+    }
 }
