@@ -9,10 +9,6 @@ import UIKit
 
 class CharacterViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CharacterViewCellDelegate {
     
-    func didSelectCharacter(cell: CharacterViewCell, character: Result) {
-        print("Selected character: \(character.name)")
-    }
-
     private let service: RickAndMortyService = RickAndMortyService()
 
     // List of Characters
@@ -59,6 +55,15 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
         characterCell.setupCell(character: characters[indexPath.item])
         characterCell.delegate = self
         return characterCell
+    }
+    
+    func didSelectCharacter(cell: CharacterViewCell, character: Result) {
+        let characterDetailVC = CharacterDetailViewController()
+        characterDetailVC.selectedCharacter = character
+        characterDetailVC.view.backgroundColor = .white
+        characterDetailVC.title = character.name
+        
+        self.navigationController?.pushViewController(characterDetailVC, animated: true)
     }
 }
 

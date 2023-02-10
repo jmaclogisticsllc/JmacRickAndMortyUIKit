@@ -74,14 +74,20 @@ class CharacterViewCell: UICollectionViewCell {
     
     func setupCell(character: Result) {
         self.character = character
+        
+        // Setup TapGesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
         addGestureRecognizer(tapGesture)
+        
+        // Add Character Name to Label
         characterNameLabel.text = character.name
-        print("This is the image: \(character.image)")
+        
+        // Add the Image to the CharacterImageView
         let character_image = URL(string: character.image)
         characterImage.kf.setImage(with: character_image)
     }
     
+    // Handle the Tap
     @objc func handleTap(sender: UITapGestureRecognizer){
         guard let delegate = delegate else { return }
         delegate.didSelectCharacter(cell: self, character: character!)
