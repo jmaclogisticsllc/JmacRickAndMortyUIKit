@@ -18,6 +18,7 @@
 		E237BA342912CEC6000EE349 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA332912CEC6000EE349 /* Character.swift */; };
 		E237BA372912CF15000EE349 /* RickAndMortyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA362912CF15000EE349 /* RickAndMortyService.swift */; };
 		E237BA392912ECF3000EE349 /* CharacterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA382912ECF3000EE349 /* CharacterViewCell.swift */; };
+		E2E5AEF92995BE7D0087F780 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E2E5AEF82995BE7D0087F780 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E5AEF92995BE7D0087F780 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +183,9 @@
 			dependencies = (
 			);
 			name = JmacRickAndMortyUIKIT;
+			packageProductDependencies = (
+				E2E5AEF82995BE7D0087F780 /* Kingfisher */,
+			);
 			productName = JmacRickAndMortyUIKIT;
 			productReference = E237B9FD2912BA97000EE349 /* JmacRickAndMortyUIKIT.app */;
 			productType = "com.apple.product-type.application";
@@ -253,6 +258,9 @@
 				Base,
 			);
 			mainGroup = E237B9F42912BA97000EE349;
+			packageReferences = (
+				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = E237B9FE2912BA97000EE349 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -632,6 +640,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E2E5AEF82995BE7D0087F780 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E237B9F52912BA97000EE349 /* Project object */;
 }

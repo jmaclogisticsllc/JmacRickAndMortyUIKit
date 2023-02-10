@@ -36,6 +36,7 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
         
         // Call UIViewController
         super.viewDidLoad()
+        collectionView.backgroundColor = .green
         
         service.fetchCharacter { results in
             self.characters.append(contentsOf: results)
@@ -44,7 +45,6 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CharacterViewCell.self, forCellWithReuseIdentifier: "characterCell")
-        collectionView.backgroundColor = .green
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
