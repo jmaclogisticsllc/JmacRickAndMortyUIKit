@@ -16,22 +16,12 @@ class CharacterDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Ensure the CharacterViewCell did not pass a nil value
         if let character = selectedCharacter {
+            // Value passed
             print("This is the character: \(character)")
         }
-
-        // Do any additional setup after loading the view.
+        
+        // Continues without throwing and error
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

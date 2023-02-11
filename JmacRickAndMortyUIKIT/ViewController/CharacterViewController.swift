@@ -16,6 +16,7 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
     
     override func loadView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        // TODO: Make this dynamic
         layout.itemSize = CGSize(width: 100, height: 100)
         layout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -59,10 +60,14 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
     
     func didSelectCharacter(cell: CharacterViewCell, character: Result) {
         let characterDetailVC = CharacterDetailViewController()
+        
+        // Set the selectedCharacter on the CharacterDetailViewController
         characterDetailVC.selectedCharacter = character
         characterDetailVC.view.backgroundColor = .white
         characterDetailVC.title = character.name
         
+        // If the navigationController is not nill (ViewController is embedded inside), the CharacterDetaiViewController will be pushed onto the Navigation Stack
+        // Allows users to navigate back and forth
         self.navigationController?.pushViewController(characterDetailVC, animated: true)
     }
 }
