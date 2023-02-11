@@ -48,30 +48,30 @@ class CharacterViewCell: UICollectionViewCell {
         configureSubViews()
     }
                                                 
-    
     func configureSubViews() {
-            addSubview(characterImage)
-            addSubview(characterNameLabel)
-            clipsToBounds = true
+        addSubview(characterImage)
+        addSubview(characterNameLabel)
+        clipsToBounds = true
 
-            // Add constraints to the image view
-            NSLayoutConstraint.activate([
-                characterImage.topAnchor.constraint(equalTo: topAnchor),
-                characterImage.leadingAnchor.constraint(equalTo: leadingAnchor),
-                characterImage.trailingAnchor.constraint(equalTo: trailingAnchor),
-                characterImage.bottomAnchor.constraint(equalTo: characterNameLabel.topAnchor),
-            ])
-            
-            // Add constraints to the label
-            characterNameLabel.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                characterNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-                characterNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-                characterNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-                characterNameLabel.heightAnchor.constraint(equalToConstant: 50.0)
-            ])
-        }
+        // Add constraints to the image view
+        NSLayoutConstraint.activate([
+            characterImage.topAnchor.constraint(equalTo: topAnchor),
+            characterImage.leadingAnchor.constraint(equalTo: leadingAnchor),
+            characterImage.trailingAnchor.constraint(equalTo: trailingAnchor),
+            characterImage.bottomAnchor.constraint(equalTo: characterNameLabel.topAnchor),
+        ])
+        
+        // Add constraints to the label
+        characterNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            characterNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            characterNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            characterNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            characterNameLabel.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+    }
     
+    // CharacterViewController sends this from the CollectionView
     func setupCell(character: Result) {
         self.character = character
         

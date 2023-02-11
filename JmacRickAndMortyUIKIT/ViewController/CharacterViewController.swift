@@ -58,6 +58,8 @@ class CharacterViewController: UICollectionViewController, UICollectionViewDeleg
         return characterCell
     }
     
+    // When the user tags on the a character, handleTap() function is triggered
+    // Delegate is notified by calling the didSelectCharacter()
     func didSelectCharacter(cell: CharacterViewCell, character: Result) {
         let characterDetailVC = CharacterDetailViewController()
         
