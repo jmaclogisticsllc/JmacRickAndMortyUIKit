@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class CharacterDetailViewController: UIViewController {
     
     var selectedCharacter: Result?
@@ -32,8 +30,6 @@ class CharacterDetailViewController: UIViewController {
         
         // Ensure the CharacterViewCell did not pass a nil value
         if let character = selectedCharacter {
-            // Value passed
-            print("This is the character: \(character)")
             characterNameLabel.text = character.name
             let chacterImage = URL(string: character.image)
             characterImageView.kf.setImage(with: chacterImage)
