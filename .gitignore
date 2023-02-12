@@ -1,0 +1,5 @@
+# ignore Pods directory
+Pods/
+
+# ignore OpenTok.framework
+Pods/OpenTok/OpenTok.framework/

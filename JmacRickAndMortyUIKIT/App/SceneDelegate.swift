@@ -15,10 +15,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = scene as? UIWindowScene {
             let characterVC = CharacterViewController()
+            characterVC.tabBarItem = UITabBarItem(title: "CharacterView", image: UIImage(systemName: "star"), tag: 0)
+            
             let videoVC = VideoViewController()
-            let navController = UINavigationController(rootViewController: characterVC)
+            videoVC.tabBarItem = UITabBarItem(title: "VideoChat", image: UIImage(systemName: "video"), tag: 1)
+            
+            let characterNavController = UINavigationController(rootViewController: characterVC)
+            let videoNavController = UINavigationController(rootViewController: videoVC)
+            
             let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [navController, videoVC]
+            tabBarController.viewControllers = [characterNavController, videoNavController]
+            tabBarController.selectedIndex = 0
+            
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = tabBarController
             self.window = window

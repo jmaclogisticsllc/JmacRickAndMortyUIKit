@@ -16,9 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         let characterVC = CharacterViewController()
         let videoVC = VideoViewController()
+        
         let characterNavVC = UINavigationController(rootViewController: characterVC)
+        let videoNavVC = UINavigationController(rootViewController: videoVC)
+        
         let mainTabBar = UITabBarController()
-        mainTabBar.viewControllers = [characterNavVC, videoVC]
+        mainTabBar.viewControllers = [characterNavVC, videoNavVC]
         window?.rootViewController = mainTabBar
         window?.makeKeyAndVisible()
         return true
