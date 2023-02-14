@@ -111,7 +111,6 @@
 				6BCF0DE10521FC4AAC2372E5 /* Pods-JmacRickAndMortyUIKITTests.debug.xcconfig */,
 				E524290114C6C83AEE779CDB /* Pods-JmacRickAndMortyUIKITTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -309,7 +308,7 @@
 			);
 			mainGroup = E237B9F42912BA97000EE349;
 			packageReferences = (
-				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E237B9FE2912BA97000EE349 /* Products */;
 			projectDirPath = "";
@@ -606,6 +605,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -634,6 +634,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -769,7 +770,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -782,7 +783,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		E2E5AEF82995BE7D0087F780 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
