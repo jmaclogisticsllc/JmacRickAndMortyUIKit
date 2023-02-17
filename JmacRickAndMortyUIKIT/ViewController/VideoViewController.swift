@@ -9,12 +9,24 @@ import UIKit
 import OpenTok
 
 class VideoViewController: UIViewController {
-    
+
     let apiKey = String(cString: getenv("VONAGE_API_KEY"))
     let sessionId = String(cString: getenv("VONAGE_SESSION_ID"))
     let token = String(cString: getenv("VONAGE_TOKEN"))
     
-    var session: OTSession?
+    // Session
+    lazy var session: OTSession = {
+        return OTSession(apiKey: apiKey, sessionId: sessionId, delegate: self)!
+    }()
+    
+    // Publisher
+    lazy var publisher: OTPublisher = {
+        let settings = OTPublisherSettings()
+        settings.name = UIDevice.current.name
+        return OTPublisher(delegate: self, settings: settings)!
+    }()
+    
+    var subscriber: OTSubscriber?
     
     let sessionButton = UIButton()
 
@@ -22,8 +34,6 @@ class VideoViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .blue
         setupLeaveSessionButton()
-        
-        session = OTSession(apiKey: apiKey, sessionId: sessionId, delegate: self)
         connectToSession()
     }
     
@@ -51,45 +61,65 @@ class VideoViewController: UIViewController {
     }
     
     func connectToSession() {
-        session?.connect(withToken: token, error: nil)
+        session.connect(withToken: token, error: nil)
     }
     
     private func publishCamera() {
-      // 1
-      guard let publisher = OTPublisher(delegate: nil) else {
-        return
-      }
+        // 1
+        guard let publisher = OTPublisher(delegate: nil) else { return }
 
-      // 2
-      var error: OTError?
-      session?.publish(publisher, error: &error)
+        // 2
+        var error: OTError?
+        session.publish(publisher, error: &error)
 
-      // 3
-      if let error = error {
-        print("An error occurred when trying to publish", error)
-        return
-      }
+        // 3
+        if let error = error {
+            print("An error occurred when trying to publish", error)
+            return
+        }
 
-      // 4
-      guard let publisherView = publisher.view else {
-        return
-      }
+        // 4
+        guard let publisherView = publisher.view else { return }
 
-      // 5
-      let screenBounds = UIScreen.main.bounds
-      let viewWidth: CGFloat = 150
-      let viewHeight: CGFloat = 267
-      let margin: CGFloat = 20
+        // 5
+        let screenBounds = UIScreen.main.bounds
+        let viewWidth: CGFloat = 150
+        let viewHeight: CGFloat = 267
+        let margin: CGFloat = 20
 
-      publisherView.frame = CGRect(
-        x: screenBounds.width - viewWidth - margin,
-        y: screenBounds.height - viewHeight - margin,
-        width: viewWidth,
-        height: viewHeight
-      )
-      view.addSubview(publisherView)
+        publisherView.frame = CGRect(
+            x: screenBounds.width - viewWidth - margin,
+            y: screenBounds.height - viewHeight - margin,
+            width: viewWidth,
+            height: viewHeight
+        )
+        
+        view.addSubview(publisherView)
     }
+}
 
+extension VideoViewController: OTPublisherDelegate {
+    func publisher(_ publisher: OTPublisherKit, didFailWithError error: OTError) {
+        print("Stream Failed: \(error.localizedDescription)")
+    }
+    
+    func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
+        print("Stream Created: \(stream.streamId)")
+    }
+    
+    func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
+        print("Stream Destroyed: \(stream.streamId)")
+    }
+}
+
+extension VideoViewController: OTSubscriberDelegate {
+    func subscriber(_ subscriber: OTSubscriberKit, didFailWithError error: OTError) {
+        print("Subscriber failed: \(error.localizedDescription)")
+    }
+    
+    func subscriberDidConnect(toStream subscriber: OTSubscriberKit) {
+        print("Subscriber COnnected")
+    }
 }
 
 extension VideoViewController: OTSessionDelegate {
@@ -113,5 +143,4 @@ extension VideoViewController: OTSessionDelegate {
     func session(_ session: OTSession, didFailWithError error: OTError) {
         print("Error: \(error.localizedDescription)")
     }
-    
 }
