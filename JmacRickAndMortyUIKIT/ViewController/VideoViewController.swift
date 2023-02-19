@@ -8,11 +8,16 @@
 import UIKit
 import OpenTok
 
+let kWidgetHeight = 240
+let kWidgetWidth = 320
+
 class VideoViewController: UIViewController {
 
     let apiKey = String(cString: getenv("VONAGE_API_KEY"))
     let sessionId = String(cString: getenv("VONAGE_SESSION_ID"))
     let token = String(cString: getenv("VONAGE_TOKEN"))
+    
+    private var subscriberView: UIView?
     
     // Session
     lazy var session: OTSession = {
@@ -78,23 +83,44 @@ class VideoViewController: UIViewController {
             return
         }
 
-        // 4
-        guard let publisherView = publisher.view else { return }
-
-        // 5
-        let screenBounds = UIScreen.main.bounds
-        let viewWidth: CGFloat = 150
-        let viewHeight: CGFloat = 267
-        let margin: CGFloat = 20
-
-        publisherView.frame = CGRect(
-            x: screenBounds.width - viewWidth - margin,
-            y: screenBounds.height - viewHeight - margin,
-            width: viewWidth,
-            height: viewHeight
-        )
+        if let pubView = publisher.view {
+            pubView.frame = CGRect(x: 0, y: 0, width: 320, height: 240)
+            view.addSubview(pubView)
+        }
+    }
+    
+    fileprivate func doPublish() {
+        var error: OTError?
+        defer {
+            processError(error)
+        }
         
-        view.addSubview(publisherView)
+        session.publish(publisher, error: &error)
+        
+        if let pubView = publisher.view {
+            pubView.frame = CGRect(x: 0, y: 0, width: kWidgetWidth, height: kWidgetHeight)
+            view.addSubview(pubView)
+        }
+    }
+    
+    fileprivate func doSubscribe(_ stream: OTStream) {
+        var error: OTError?
+        defer {
+            processError(error)
+        }
+        subscriber = OTSubscriber(stream: stream, delegate: self)
+        
+        session.subscribe(subscriber!, error: &error)
+    }
+    
+    fileprivate func processError(_ error: OTError?) {
+        if let err = error {
+            DispatchQueue.main.async {
+                let controller = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
+                controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
     }
 }
 
@@ -117,15 +143,21 @@ extension VideoViewController: OTSubscriberDelegate {
         print("Subscriber failed: \(error.localizedDescription)")
     }
     
-    func subscriberDidConnect(toStream subscriber: OTSubscriberKit) {
-        print("Subscriber COnnected")
+    func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
+        if let subsView = subscriber?.view {
+            subsView.frame = CGRect(x: 0, y: 240, width: 340, height: 240)
+            view.addSubview(subsView)
+            print("Subscriber COnnected")
+        }
     }
 }
 
 extension VideoViewController: OTSessionDelegate {
     func sessionDidConnect(_ session: OTSession) {
-        publishCamera()
         print("Client Connected to Session")
+        print("This is the session Id: \(session.sessionId)")
+        print("This is the client capabilities: \(session.capabilities)")
+        doPublish()
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
@@ -134,6 +166,9 @@ extension VideoViewController: OTSessionDelegate {
     
     func session(_ session: OTSession, streamCreated stream: OTStream) {
         print("Stream created: \(stream.streamId)")
+        if subscriber == nil {
+            doSubscribe(stream)
+        }
     }
     
     func session(_ session: OTSession, streamDestroyed stream: OTStream) {
