@@ -33,30 +33,10 @@ class VideoViewController: UIViewController {
     
     var subscriber: OTSubscriber?
     
-    let sessionButton = UIButton()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .blue
-        setupLeaveSessionButton()
         connectToSession()
-    }
-    
-    func setupLeaveSessionButton() {
-        view.addSubview(sessionButton)
-        
-        sessionButton.configuration = .filled()
-        sessionButton.configuration?.baseBackgroundColor = .systemRed
-        sessionButton.configuration?.title = "Leave Session"
-        sessionButton.addTarget(self, action: #selector(goToTabView), for: .touchUpInside)
-        sessionButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            sessionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sessionButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            sessionButton.widthAnchor.constraint(equalToConstant: 200),
-            sessionButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
     }
     
     @objc func goToTabView() {
@@ -98,8 +78,25 @@ class VideoViewController: UIViewController {
         session.publish(publisher, error: &error)
         
         if let pubView = publisher.view {
-            pubView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+            pubView.frame = view.bounds
             view.addSubview(pubView)
+            
+            // add the button to the pubView
+            let sessionButton = UIButton()
+            sessionButton.configuration = .filled()
+            sessionButton.configuration?.baseBackgroundColor = .systemRed
+            sessionButton.configuration?.title = "Leave Session"
+            sessionButton.addTarget(self, action: #selector(goToTabView), for: .touchUpInside)
+            sessionButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            pubView.addSubview(sessionButton)
+            
+            NSLayoutConstraint.activate([
+                sessionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                sessionButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                sessionButton.widthAnchor.constraint(equalToConstant: 200),
+                sessionButton.heightAnchor.constraint(equalToConstant: 50)
+            ])
         }
     }
     
