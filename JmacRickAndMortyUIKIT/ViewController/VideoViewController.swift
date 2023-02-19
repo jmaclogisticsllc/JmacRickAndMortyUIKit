@@ -84,7 +84,7 @@ class VideoViewController: UIViewController {
         }
 
         if let pubView = publisher.view {
-            pubView.frame = CGRect(x: 0, y: 0, width: 320, height: 240)
+            pubView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
             view.addSubview(pubView)
         }
     }
@@ -98,7 +98,7 @@ class VideoViewController: UIViewController {
         session.publish(publisher, error: &error)
         
         if let pubView = publisher.view {
-            pubView.frame = CGRect(x: 0, y: 0, width: kWidgetWidth, height: kWidgetHeight)
+            pubView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
             view.addSubview(pubView)
         }
     }
@@ -111,6 +111,13 @@ class VideoViewController: UIViewController {
         subscriber = OTSubscriber(stream: stream, delegate: self)
         
         session.subscribe(subscriber!, error: &error)
+    }
+    
+    func addSubscriberView() {
+        if let subscriberView = subscriber?.view {
+            subscriberView.frame = CGRect(x: 50, y: 0, width: 200, height: 200)
+            view.addSubview(subscriberView)
+        }
     }
     
     fileprivate func processError(_ error: OTError?) {
@@ -130,25 +137,25 @@ extension VideoViewController: OTPublisherDelegate {
     }
     
     func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
-        print("Stream Created: \(stream.streamId)")
+        print("Stream Created for Publisher: \(stream.streamId)")
+        if subscriber == nil {
+            doSubscribe(stream)
+        }
     }
     
     func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
-        print("Stream Destroyed: \(stream.streamId)")
+        print("Stream Destroyed for Publisher: \(stream.streamId)")
     }
 }
 
 extension VideoViewController: OTSubscriberDelegate {
     func subscriber(_ subscriber: OTSubscriberKit, didFailWithError error: OTError) {
-        print("Subscriber failed: \(error.localizedDescription)")
+        print("Subscriber failed for Subscriber: \(error.localizedDescription)")
     }
     
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
-        if let subsView = subscriber?.view {
-            subsView.frame = CGRect(x: 0, y: 240, width: 340, height: 240)
-            view.addSubview(subsView)
-            print("Subscriber COnnected")
-        }
+        addSubscriberView()
+        print("Subscriber Connected")
     }
 }
 
@@ -165,14 +172,12 @@ extension VideoViewController: OTSessionDelegate {
     }
     
     func session(_ session: OTSession, streamCreated stream: OTStream) {
-        print("Stream created: \(stream.streamId)")
-        if subscriber == nil {
-            doSubscribe(stream)
-        }
+        print("Stream created on Session: \(stream.streamId)")
+
     }
     
     func session(_ session: OTSession, streamDestroyed stream: OTStream) {
-        print("Stream Destroyed: \(stream.streamId)")
+        print("Stream Destroyed on Session: \(stream.streamId)")
     }
     
     func session(_ session: OTSession, didFailWithError error: OTError) {
