@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "87E3A70B-0CED-4207-959F-7C180547C377"
+            uuid = "E010808A-5D94-45E0-9F0F-82A6A14E9622"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JmacRickAndMortyUIKIT/ViewController/VideoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "connectToSession()"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "session(_:streamCreated:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

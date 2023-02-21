@@ -49,26 +49,6 @@ class VideoViewController: UIViewController {
         session.connect(withToken: token, error: nil)
     }
     
-    private func publishCamera() {
-        // 1
-        guard let publisher = OTPublisher(delegate: nil) else { return }
-
-        // 2
-        var error: OTError?
-        session.publish(publisher, error: &error)
-
-        // 3
-        if let error = error {
-            print("An error occurred when trying to publish", error)
-            return
-        }
-
-        if let pubView = publisher.view {
-            pubView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-            view.addSubview(pubView)
-        }
-    }
-    
     fileprivate func doPublish() {
         var error: OTError?
         defer {
@@ -100,16 +80,6 @@ class VideoViewController: UIViewController {
         }
     }
     
-    fileprivate func doSubscribe(_ stream: OTStream) {
-        var error: OTError?
-        defer {
-            processError(error)
-        }
-        subscriber = OTSubscriber(stream: stream, delegate: self)
-        
-        session.subscribe(subscriber!, error: &error)
-    }
-    
     func addSubscriberView() {
         if let subscriberView = subscriber?.view {
             subscriberView.frame = CGRect(x: 50, y: 0, width: 200, height: 200)
@@ -135,9 +105,7 @@ extension VideoViewController: OTPublisherDelegate {
     
     func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
         print("Stream Created for Publisher: \(stream.streamId)")
-        if subscriber == nil {
-            doSubscribe(stream)
-        }
+
     }
     
     func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
@@ -150,18 +118,38 @@ extension VideoViewController: OTSubscriberDelegate {
         print("Subscriber failed for Subscriber: \(error.localizedDescription)")
     }
     
+    func subscriberVideoDisabled(_ subscriber: OTSubscriberKit, reason: OTSubscriberVideoEventReason) {
+        print("subscriber \(subscriber) Video Lost due to: \(reason)")
+    }
+    
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
         addSubscriberView()
-        print("Subscriber Connected")
+        print("Subscriber Connected to \(subscriberKit.session.streams)")
+    }
+    
+    fileprivate func doSubscribe(_ stream: OTStream) {
+        print("Subscribing to streamId: \(stream.streamId)")
+        var error: OTError?
+        defer {
+            processError(error)
+        }
+        subscriber = OTSubscriber(stream: stream, delegate: self)
+        
+        print("Subscriber \(subscriber)")
+        
+        session.subscribe(subscriber!, error: &error)
     }
 }
 
 extension VideoViewController: OTSessionDelegate {
     func sessionDidConnect(_ session: OTSession) {
-        print("Client Connected to Session")
-        print("This is the session Id: \(session.sessionId)")
-        print("This is the client capabilities: \(session.capabilities)")
+        print("OTSession DidConnect: \(session.sessionId)")
+        print("OTSession Capabilities: \(session.capabilities)")
         doPublish()
+    }
+    
+    func session(_ session: OTSession, connectionCreated connection: OTConnection) {
+        print("Session \(session.sessionId) detected a new connection \(connection.connectionId)")
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
@@ -169,12 +157,21 @@ extension VideoViewController: OTSessionDelegate {
     }
     
     func session(_ session: OTSession, streamCreated stream: OTStream) {
-        print("Stream created on Session: \(stream.streamId)")
-
+        print("Session created streamId: \(stream.connection.connectionId)")
+        if subscriber == nil {
+            doSubscribe(stream)
+        }
     }
     
     func session(_ session: OTSession, streamDestroyed stream: OTStream) {
-        print("Stream Destroyed on Session: \(stream.streamId)")
+        print("Destroying Stream ID: \(stream.streamId)")
+        print("Destroying OTSessionID: \(stream.session.sessionId)")
+        print("Destroying Stream connectionID: \(stream.session.connection?.connectionId)")
+        if subscriber?.stream?.streamId == stream.streamId {
+            
+            subscriber?.view?.removeFromSuperview()
+            subscriber = nil
+        }
     }
     
     func session(_ session: OTSession, didFailWithError error: OTError) {
