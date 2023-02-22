@@ -224,6 +224,7 @@
 				E237B9F92912BA97000EE349 /* Sources */,
 				E237B9FA2912BA97000EE349 /* Frameworks */,
 				E237B9FB2912BA97000EE349 /* Resources */,
+				51FFF7B8447B912464FB2CC3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -264,6 +265,7 @@
 				E237BA192912BA99000EE349 /* Sources */,
 				E237BA1A2912BA99000EE349 /* Frameworks */,
 				E237BA1B2912BA99000EE349 /* Resources */,
+				3F00B42DD2D127DBB0D08044 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -308,7 +310,7 @@
 			);
 			mainGroup = E237B9F42912BA97000EE349;
 			packageReferences = (
-				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = E237B9FE2912BA97000EE349 /* Products */;
 			projectDirPath = "";
@@ -370,6 +372,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3F00B42DD2D127DBB0D08044 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests/Pods-JmacRickAndMortyUIKIT-JmacRickAndMortyUIKITUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4D1D22CC07DFA0EB48E35E74 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -390,6 +409,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		51FFF7B8447B912464FB2CC3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A70F33E31340847FFD7232C4 /* [CP] Check Pods Manifest.lock */ = {
@@ -770,7 +806,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -783,7 +819,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		E2E5AEF82995BE7D0087F780 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

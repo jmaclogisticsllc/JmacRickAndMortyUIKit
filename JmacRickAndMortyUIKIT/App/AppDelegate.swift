@@ -6,12 +6,25 @@
 //
 
 import UIKit
+import Datadog
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        Datadog.initialize(
+            appContext: .init(),
+            trackingConsent: .granted,
+            configuration: Datadog.Configuration
+                .builderUsing(clientToken: "pubb5b586479b274be0e1b107db1dde240c", environment: "dev")
+                .set(serviceName: "ios-app")
+                .set(endpoint: .us5)
+                .build()
+        )
+        Datadog.verbosityLevel = .debug
+
         // Override point for customization after application launch.
         window = UIWindow()
         let characterVC = CharacterViewController()
@@ -24,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainTabBar.viewControllers = [characterNavVC, videoNavVC]
         window?.rootViewController = mainTabBar
         window?.makeKeyAndVisible()
+        
+        
         return true
     }
 

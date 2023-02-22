@@ -1,20 +1,24 @@
 PODS:
+  - DatadogSDK (1.15.0)
   - OpenTok (2.24.0):
     - VonageWebRTC (= 99.2.39)
   - VonageWebRTC (99.2.39)
 
 DEPENDENCIES:
+  - DatadogSDK
   - OpenTok (= 2.24)
 
 SPEC REPOS:
   trunk:
+    - DatadogSDK
     - OpenTok
     - VonageWebRTC
 
 SPEC CHECKSUMS:
+  DatadogSDK: d7e3ef65693db38842f85885c01ba0865e10a782
   OpenTok: 6995850a6a7a37464ffece03ae0b8563b0f5445d
   VonageWebRTC: 4b57187170ef4ea435006e932600646a0521d6b0
 
-PODFILE CHECKSUM: 915f9d37860ac3bb136e53b28c3234ff27a902c2
+PODFILE CHECKSUM: 26b91e1d2651784b5c76fcc32f1bb15a1b57078e
 
 COCOAPODS: 1.11.3

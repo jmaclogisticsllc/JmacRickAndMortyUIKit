@@ -7,6 +7,7 @@
 
 import UIKit
 import OpenTok
+import Datadog
 
 let kWidgetHeight = 240
 let kWidgetWidth = 320
@@ -16,6 +17,8 @@ class VideoViewController: UIViewController {
     let apiKey = String(cString: getenv("VONAGE_API_KEY"))
     let sessionId = String(cString: getenv("VONAGE_SESSION_ID"))
     let token = String(cString: getenv("VONAGE_TOKEN"))
+        
+    //let telemetry = DDTelemetry(apiKey: "ab30fb7110fe528720ff44fb20f970b0")
     
     private var subscriberView: UIView?
     
@@ -31,10 +34,20 @@ class VideoViewController: UIViewController {
         return OTPublisher(delegate: self, settings: settings)!
     }()
     
+    let logger = Logger.builder
+        .sendNetworkInfo(true)
+        .sendLogsToDatadog(true)
+        .set(loggerName: "ios")
+        .set(serviceName: "ios-app")
+        .printLogsToConsole(true, usingFormat: .shortWith(prefix: "[iOS App] "))
+        .build()
+    
     var subscriber: OTSubscriber?
     
     override func viewDidLoad() {
+        logger.info("ViewDidLoad()")
         super.viewDidLoad()
+        
         self.view.backgroundColor = .blue
         connectToSession()
     }
@@ -46,6 +59,7 @@ class VideoViewController: UIViewController {
     }
     
     func connectToSession() {
+        logger.info("Connect to session")
         session.connect(withToken: token, error: nil)
     }
     
@@ -121,7 +135,7 @@ extension VideoViewController: OTSubscriberDelegate {
     func subscriberVideoDisabled(_ subscriber: OTSubscriberKit, reason: OTSubscriberVideoEventReason) {
         print("subscriber \(subscriber) Video Lost due to: \(reason)")
     }
-    
+        
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
         addSubscriberView()
         print("Subscriber Connected to \(subscriberKit.session.streams)")
@@ -143,19 +157,19 @@ extension VideoViewController: OTSubscriberDelegate {
 
 extension VideoViewController: OTSessionDelegate {
     func sessionDidConnect(_ session: OTSession) {
-        print("OTSession DidConnect: \(session.sessionId)")
-        print("OTSession Capabilities: \(session.capabilities)")
+        self.logger.info("OTSession Connected")
         doPublish()
     }
     
     func session(_ session: OTSession, connectionCreated connection: OTConnection) {
+        print("This is fired when a client connected to a session")
         print("Session \(session.sessionId) detected a new connection \(connection.connectionId)")
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
         print("Dis connected")
     }
-    
+        
     func session(_ session: OTSession, streamCreated stream: OTStream) {
         print("Session created streamId: \(stream.connection.connectionId)")
         if subscriber == nil {
