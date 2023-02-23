@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .builderUsing(clientToken: "pubb5b586479b274be0e1b107db1dde240c", environment: "dev")
                 .set(serviceName: "ios-app")
                 .set(endpoint: .us5)
+                .trackBackgroundEvents()
                 .build()
         )
-        Datadog.verbosityLevel = .debug
 
         // Override point for customization after application launch.
         window = UIWindow()

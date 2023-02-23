@@ -69,6 +69,7 @@ class VideoViewController: UIViewController {
             processError(error)
         }
         
+        logger.info("Publisher started publisher: \(String(describing: publisher.name))")
         session.publish(publisher, error: &error)
         
         if let pubView = publisher.view {
@@ -114,16 +115,16 @@ class VideoViewController: UIViewController {
 
 extension VideoViewController: OTPublisherDelegate {
     func publisher(_ publisher: OTPublisherKit, didFailWithError error: OTError) {
-        print("Stream Failed: \(error.localizedDescription)")
+        logger.info("Publisher Failed")
     }
     
     func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
-        print("Stream Created for Publisher: \(stream.streamId)")
+        logger.info("Publisher Stream created, new stream is created: \(stream.streamId)")
 
     }
     
     func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
-        print("Stream Destroyed for Publisher: \(stream.streamId)")
+        logger.info("Publisher Stream Destroyed: \(stream.streamId)")
     }
 }
 
@@ -138,7 +139,7 @@ extension VideoViewController: OTSubscriberDelegate {
         
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
         addSubscriberView()
-        print("Subscriber Connected to \(subscriberKit.session.streams)")
+        logger.info("Subscriber View Added to this stream Id: \(String(describing: subscriberKit.stream?.streamId))")
     }
     
     fileprivate func doSubscribe(_ stream: OTStream) {
@@ -148,22 +149,51 @@ extension VideoViewController: OTSubscriberDelegate {
             processError(error)
         }
         subscriber = OTSubscriber(stream: stream, delegate: self)
+        subscriber?.networkStatsDelegate = self
         
-        print("Subscriber \(subscriber)")
+        logger.info("Subscriber added to stream id: \(stream.streamId)")
         
         session.subscribe(subscriber!, error: &error)
     }
 }
 
+extension VideoViewController: OTPublisherKitNetworkStatsDelegate {
+    func publisher(_ publisher: OTPublisherKit, videoNetworkStatsUpdated stats: [OTPublisherKitVideoNetworkStats]) {
+        if let publisherStats = stats.first {
+            // You can now access the publisher's network stats here
+            let videoPacketsLost = publisherStats.videoPacketsLost
+            let videoPacketReceived = publisherStats.videoBytesSent
+            
+        }
+    }
+    
+}
+
+extension VideoViewController: OTSubscriberKitNetworkStatsDelegate {
+    func subscriber(_ subscriber: OTSubscriberKit, videoNetworkStatsUpdated stats: OTSubscriberKitVideoNetworkStats) {
+        let videoPacketsLost = stats.videoPacketsLost
+        let videoPacketReceived = stats.videoBytesReceived
+                
+        // Log video network stats to Datadog
+//        let videoNetworkStats = [
+//            "video_packets_lost": videoPacketsLost,
+//            "video_packets_received": videoPacketReceived
+//        ]
+//
+//        logger.info("Subscriber network stats: \(videoNetworkStats)")
+    }
+}
+
 extension VideoViewController: OTSessionDelegate {
     func sessionDidConnect(_ session: OTSession) {
-        self.logger.info("OTSession Connected")
+        logger.info("Session Created: \(session.sessionId)")
+        let status = OTSessionConnectionStatus(rawValue: session.sessionConnectionStatus.rawValue)
+        logger.info("OTSession Connection Status: \(String(describing: status))")
         doPublish()
     }
     
     func session(_ session: OTSession, connectionCreated connection: OTConnection) {
-        print("This is fired when a client connected to a session")
-        print("Session \(session.sessionId) detected a new connection \(connection.connectionId)")
+        logger.info("New Client connected this is the connection id: \(connection.connectionId)")
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
@@ -171,9 +201,10 @@ extension VideoViewController: OTSessionDelegate {
     }
         
     func session(_ session: OTSession, streamCreated stream: OTStream) {
-        print("Session created streamId: \(stream.connection.connectionId)")
+        logger.info("Publisher session streams: \(session.streams)")
         if subscriber == nil {
             doSubscribe(stream)
+            logger.info("Subscriber connected: \(stream.streamId)")
         }
     }
     
@@ -182,7 +213,6 @@ extension VideoViewController: OTSessionDelegate {
         print("Destroying OTSessionID: \(stream.session.sessionId)")
         print("Destroying Stream connectionID: \(stream.session.connection?.connectionId)")
         if subscriber?.stream?.streamId == stream.streamId {
-            
             subscriber?.view?.removeFromSuperview()
             subscriber = nil
         }
