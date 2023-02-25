@@ -13,12 +13,10 @@ let kWidgetHeight = 240
 let kWidgetWidth = 320
 
 class VideoViewController: UIViewController {
-
+    
     let apiKey = String(cString: getenv("VONAGE_API_KEY"))
     let sessionId = String(cString: getenv("VONAGE_SESSION_ID"))
     let token = String(cString: getenv("VONAGE_TOKEN"))
-        
-    //let telemetry = DDTelemetry(apiKey: "ab30fb7110fe528720ff44fb20f970b0")
     
     private var subscriberView: UIView?
     
@@ -34,6 +32,8 @@ class VideoViewController: UIViewController {
         return OTPublisher(delegate: self, settings: settings)!
     }()
     
+    var subscriber: OTSubscriber!
+    
     let logger = Logger.builder
         .sendNetworkInfo(true)
         .sendLogsToDatadog(true)
@@ -42,9 +42,11 @@ class VideoViewController: UIViewController {
         .printLogsToConsole(true, usingFormat: .shortWith(prefix: "[iOS App] "))
         .build()
     
-    var subscriber: OTSubscriber?
-    
     override func viewDidLoad() {
+        let span = Global.sharedTracer.startSpan(operationName: "DidLoad()")
+        span.setTag(key: "class", value: "VideoViewController")
+        span.finish()
+        
         logger.info("ViewDidLoad()")
         super.viewDidLoad()
         
@@ -59,19 +61,56 @@ class VideoViewController: UIViewController {
     }
     
     func connectToSession() {
+        let span = Global.sharedTracer.startSpan(operationName: "connectToSession()")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
         logger.info("Connect to session")
         session.connect(withToken: token, error: nil)
     }
     
+    fileprivate func processError(_ error: OTError?) {
+        if let err = error {
+            DispatchQueue.main.async {
+                let controller = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
+                controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
+    }
+}
+
+extension VideoViewController: OTPublisherDelegate {
+    func publisher(_ publisher: OTPublisherKit, didFailWithError error: OTError) {
+        logger.info("Publisher Failed")
+    }
+    
+    func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
+        logger.info("Publisher Stream created, new stream is created: \(stream.streamId)")
+        
+        let span = Global.sharedTracer.startSpan(operationName: "streamCreated.event")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
+        
+        addPublisherView()
+    }
+    
+    func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
+        logger.info("Publisher Stream Destroyed: \(stream.streamId)")
+    }
+    
     fileprivate func doPublish() {
         var error: OTError?
-        defer {
-            processError(error)
-        }
+        defer { processError(error) }
+        
+        let span = Global.sharedTracer.startSpan(operationName: "doPublisher()")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
         
         logger.info("Publisher started publisher: \(String(describing: publisher.name))")
         session.publish(publisher, error: &error)
-        
+    }
+    
+    func addPublisherView() {
         if let pubView = publisher.view {
             pubView.frame = view.bounds
             view.addSubview(pubView)
@@ -94,38 +133,6 @@ class VideoViewController: UIViewController {
             ])
         }
     }
-    
-    func addSubscriberView() {
-        if let subscriberView = subscriber?.view {
-            subscriberView.frame = CGRect(x: 50, y: 0, width: 200, height: 200)
-            view.addSubview(subscriberView)
-        }
-    }
-    
-    fileprivate func processError(_ error: OTError?) {
-        if let err = error {
-            DispatchQueue.main.async {
-                let controller = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
-                controller.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(controller, animated: true, completion: nil)
-            }
-        }
-    }
-}
-
-extension VideoViewController: OTPublisherDelegate {
-    func publisher(_ publisher: OTPublisherKit, didFailWithError error: OTError) {
-        logger.info("Publisher Failed")
-    }
-    
-    func publisher(_ publisher: OTPublisherKit, streamCreated stream: OTStream) {
-        logger.info("Publisher Stream created, new stream is created: \(stream.streamId)")
-
-    }
-    
-    func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
-        logger.info("Publisher Stream Destroyed: \(stream.streamId)")
-    }
 }
 
 extension VideoViewController: OTSubscriberDelegate {
@@ -138,22 +145,35 @@ extension VideoViewController: OTSubscriberDelegate {
     }
         
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
-        addSubscriberView()
+        let span = Global.sharedTracer.startSpan(operationName: "subscriberDidConnect()")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
+        
         logger.info("Subscriber View Added to this stream Id: \(String(describing: subscriberKit.stream?.streamId))")
+        addSubscriberView()
     }
     
     fileprivate func doSubscribe(_ stream: OTStream) {
-        print("Subscribing to streamId: \(stream.streamId)")
         var error: OTError?
-        defer {
-            processError(error)
-        }
+        defer { processError(error) }
+        
         subscriber = OTSubscriber(stream: stream, delegate: self)
         subscriber?.networkStatsDelegate = self
+        
+        let span = Global.sharedTracer.startSpan(operationName: "doSubscribe()")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
         
         logger.info("Subscriber added to stream id: \(stream.streamId)")
         
         session.subscribe(subscriber!, error: &error)
+    }
+    
+    func addSubscriberView() {
+        if let subscriberView = subscriber?.view {
+            subscriberView.frame = CGRect(x: 50, y: 0, width: 200, height: 200)
+            view.addSubview(subscriberView)
+        }
     }
 }
 
@@ -164,54 +184,77 @@ extension VideoViewController: OTPublisherKitNetworkStatsDelegate {
             let videoPacketsLost = publisherStats.videoPacketsLost
             let videoPacketReceived = publisherStats.videoBytesSent
             
+            let span = Global.sharedTracer.startSpan(operationName: "publisher.VideoNetworkStatsUpdated.Event")
+            span.setTag(key: "class", value: "VideoViewController")
+            span.setTag(key: "video_packets_lost", value: videoPacketsLost)
+            span.setTag(key: "video_packets_received", value: videoPacketReceived)
+            defer { span.finish() }
         }
     }
-    
 }
 
 extension VideoViewController: OTSubscriberKitNetworkStatsDelegate {
     func subscriber(_ subscriber: OTSubscriberKit, videoNetworkStatsUpdated stats: OTSubscriberKitVideoNetworkStats) {
         let videoPacketsLost = stats.videoPacketsLost
         let videoPacketReceived = stats.videoBytesReceived
-                
-        // Log video network stats to Datadog
-//        let videoNetworkStats = [
-//            "video_packets_lost": videoPacketsLost,
-//            "video_packets_received": videoPacketReceived
-//        ]
-//
-//        logger.info("Subscriber network stats: \(videoNetworkStats)")
+        
+        let span = Global.sharedTracer.startSpan(operationName: "subscriber.VideoNetworkStatsUpdated.Event")
+        span.setTag(key: "class", value: "VideoViewController")
+        span.setTag(key: "video_packets_lost", value: videoPacketsLost)
+        span.setTag(key: "video_packets_received", value: videoPacketReceived)
+        defer { span.finish() }
+    }
+}
+
+extension VideoViewController {
+    func traceEvent(operationName: String, tags: [String: String]) -> OTSpan {
+        let span = Global.sharedTracer.startSpan(operationName: operationName)
+        span.setTag(key: "class", value: "VideoViewController")
+        for (key, value) in tags {
+            span.setTag(key: key, value: value)
+        }
+        
+        return span
     }
 }
 
 extension VideoViewController: OTSessionDelegate {
     func sessionDidConnect(_ session: OTSession) {
-        logger.info("Session Created: \(session.sessionId)")
-        let status = OTSessionConnectionStatus(rawValue: session.sessionConnectionStatus.rawValue)
-        logger.info("OTSession Connection Status: \(String(describing: status))")
+        let span = traceEvent(operationName: "sessionDidConnect()", tags: [:])
+        defer { span.finish() }
+        
         doPublish()
     }
     
     func session(_ session: OTSession, connectionCreated connection: OTConnection) {
-        logger.info("New Client connected this is the connection id: \(connection.connectionId)")
+        let span = Global.sharedTracer.startSpan(operationName: "connectionCreated.event")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
-        print("Dis connected")
+        let span = Global.sharedTracer.startSpan(operationName: "streamCreated.event")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
     }
         
     func session(_ session: OTSession, streamCreated stream: OTStream) {
-        logger.info("Publisher session streams: \(session.streams)")
         if subscriber == nil {
             doSubscribe(stream)
             logger.info("Subscriber connected: \(stream.streamId)")
         }
+        
+        let span = Global.sharedTracer.startSpan(operationName: "streamCreated.event")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
     }
     
     func session(_ session: OTSession, streamDestroyed stream: OTStream) {
-        print("Destroying Stream ID: \(stream.streamId)")
-        print("Destroying OTSessionID: \(stream.session.sessionId)")
-        print("Destroying Stream connectionID: \(stream.session.connection?.connectionId)")
+        
+        let span = Global.sharedTracer.startSpan(operationName: "streamDestroyed.event")
+        span.setTag(key: "class", value: "VideoViewController")
+        defer { span.finish() }
+        
         if subscriber?.stream?.streamId == stream.streamId {
             subscriber?.view?.removeFromSuperview()
             subscriber = nil

@@ -12,17 +12,35 @@ import Datadog
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         Datadog.initialize(
             appContext: .init(),
             trackingConsent: .granted,
             configuration: Datadog.Configuration
-                .builderUsing(clientToken: "pubb5b586479b274be0e1b107db1dde240c", environment: "dev")
-                .set(serviceName: "ios-app")
+                .builderUsing(
+                    rumApplicationID: "",
+                    clientToken: "",
+                    environment: "dev"
+                )
                 .set(endpoint: .us5)
+                .set(serviceName: "ios-app")
+                .trackUIKitRUMViews()
+                .trackUIKitRUMActions()
+                .trackRUMLongTasks()
+                .enableTracing(true)
                 .trackBackgroundEvents()
                 .build()
+        )
+        
+        Global.rum = RUMMonitor.initialize()
+        
+        Global.sharedTracer = Tracer.initialize(
+            configuration: Tracer.Configuration(
+                serviceName: "iOS-App",
+                sendNetworkInfo: true
+            )
         )
 
         // Override point for customization after application launch.
@@ -38,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = mainTabBar
         window?.makeKeyAndVisible()
         
+        Datadog.verbosityLevel = .debug
         
         return true
     }
