@@ -25,11 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     environment: "dev"
                 )
                 .set(endpoint: .us5)
-                .set(serviceName: "ios-app")
+                .set(serviceName: "ios-App")
                 .trackUIKitRUMViews()
                 .trackUIKitRUMActions()
                 .trackRUMLongTasks()
                 .enableTracing(true)
+                .enableLogging(true)
                 .trackBackgroundEvents()
                 .build()
         )
