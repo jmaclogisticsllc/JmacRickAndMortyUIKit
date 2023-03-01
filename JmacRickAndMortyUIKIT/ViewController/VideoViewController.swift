@@ -142,7 +142,7 @@ extension VideoViewController: OTSubscriberDelegate {
     func subscriberVideoDisabled(_ subscriber: OTSubscriberKit, reason: OTSubscriberVideoEventReason) {
         print("subscriber \(subscriber) Video Lost due to: \(reason)")
     }
-        
+    
     func subscriberDidConnect(toStream subscriberKit: OTSubscriberKit) {
         let span = traceEvent(operationName: "subscriberDidConnect()", tags: [:])
         defer { span.finish() }
@@ -157,7 +157,6 @@ extension VideoViewController: OTSubscriberDelegate {
         defer { processError(error) }
         
         subscriber = OTSubscriber(stream: stream, delegate: self)
-        //subscriber?.networkStatsDelegate = self
         
         let span = traceEvent(operationName: "doSubscribe()", tags: [:])
         defer { span.finish() }
@@ -174,36 +173,6 @@ extension VideoViewController: OTSubscriberDelegate {
         }
     }
 }
-
-//extension VideoViewController: OTPublisherKitNetworkStatsDelegate {
-//    func publisher(_ publisher: OTPublisherKit, videoNetworkStatsUpdated stats: [OTPublisherKitVideoNetworkStats]) {
-//        if let publisherStats = stats.first {
-//            // You can now access the publisher's network stats here
-//            let videoPacketsLost = publisherStats.videoPacketsLost
-//            let videoPacketReceived = publisherStats.videoBytesSent
-//
-//            let span = Global.sharedTracer.startSpan(operationName: "publisher.VideoNetworkStatsUpdated.Event")
-//            span.setTag(key: "class", value: "VideoViewController")
-//            span.setTag(key: "video_packets_lost", value: videoPacketsLost)
-//            span.setTag(key: "video_packets_received", value: videoPacketReceived)
-//
-//            span.log(fields: ["PublisherNetworkLogs": String(describing: publisher.name)])
-//            defer { span.finish() }
-//
-//        }
-//    }
-//}
-
-//extension VideoViewController: OTSubscriberKitNetworkStatsDelegate {
-//    func subscriber(_ subscriber: OTSubscriberKit, videoNetworkStatsUpdated stats: OTSubscriberKitVideoNetworkStats) {
-//        let videoPacketsLost = stats.videoPacketsLost
-//        let videoPacketReceived = stats.videoBytesReceived
-//
-//        let span = traceEvent(operationName: "doSubscribe()", tags: ["video_packets_lost": videoPacketsLost, "video_packets_received": videoPacketReceived])
-//        span.log(fields: ["Subscriber Network Stats": "LOG WIP"])
-//        defer { span.finish() }
-//    }
-//}
 
 extension VideoViewController {
     func traceEvent(operationName: String, tags: [String: UInt64]) -> OTSpan {
