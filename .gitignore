@@ -4,3 +4,4 @@ Pods/
 # ignore OpenTok.framework
 Pods/OpenTok/OpenTok.framework/
 .build/*
+build/*

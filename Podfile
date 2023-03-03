@@ -9,13 +9,13 @@ target 'JmacRickAndMortyUIKIT' do
 
   # Pods for JmacRickAndMortyUIKIT
 
-  target 'JmacRickAndMortyUIKITTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+  # target 'JmacRickAndMortyUIKITTests' do
+  #   inherit! :search_paths
+  #   # Pods for testing
+  # end
 
-  target 'JmacRickAndMortyUIKITUITests' do
-    # Pods for testing
-  end
+  # target 'JmacRickAndMortyUIKITUITests' do
+  #   # Pods for testing
+  # end
 
 end

@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             trackingConsent: .granted,
             configuration: Datadog.Configuration
                 .builderUsing(
-                    rumApplicationID: "",
-                    clientToken: "",
+                    rumApplicationID: "556ebaa7979b74aed4eab6b695189a15b136890d",
+                    clientToken: "pub303371640fc47cdb4638a094e0b25286",
                     environment: "dev"
                 )
                 .set(endpoint: .us5)
