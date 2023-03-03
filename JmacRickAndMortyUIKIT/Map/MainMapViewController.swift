@@ -11,6 +11,9 @@ import MapKit
 
 class MainMapViewController: UIViewController {
     
+    var locationManager: CLLocationManager?
+    
+    
     lazy var mapView: MKMapView = {
         let map = MKMapView()
        // map.showsUserLocation = true
@@ -33,6 +36,13 @@ class MainMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // initialize location manager
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        
+        locationManager?.requestWhenInUseAuthorization()
+        locationManager?.requestLocation()
         
         searchTextField.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchTextFieldTapped))
@@ -74,5 +84,15 @@ extension MainMapViewController: UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return false
+    }
+}
+
+extension MainMapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }
