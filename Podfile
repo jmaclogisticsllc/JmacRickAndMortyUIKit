@@ -4,7 +4,7 @@
 target 'JmacRickAndMortyUIKIT' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'OpenTok', '2.24'
+  pod 'OpenTok', ' ~> 2.24'
   pod 'DatadogSDK'
 
   # Pods for JmacRickAndMortyUIKIT
