@@ -18,6 +18,8 @@ class VideoViewController: UIViewController {
     let sessionId = String(cString: getenv("VONAGE_SESSION_ID"))
     let token = String(cString: getenv("VONAGE_TOKEN"))
     
+    private var connectionCount = 0
+    
     private var subscriberView: UIView?
     
     // Session
@@ -76,6 +78,24 @@ class VideoViewController: UIViewController {
             }
         }
     }
+    
+    // Create a function to handle incoming calls
+    func handleIncomingCall(stream: OTStream) {
+        let span = traceEvent(operationName: "handleIncomingCall()", tags: [:])
+        defer { span.finish() }
+
+        // Display the incoming call
+        let alert = UIAlertController(title: "Incoming call", message: "You have an incoming video chat from \(stream.name)", preferredStyle: .alert)
+        let acceptAction = UIAlertAction(title: "Answer", style: .default) { [weak self] action in
+            self?.doSubscribe(stream)
+        }
+        let declineAction = UIAlertAction(title: "Decline", style: .cancel) { action in
+            // Handle declining the call (e.g. notify the caller)
+        }
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension VideoViewController: OTSessionDelegate {
@@ -96,10 +116,16 @@ extension VideoViewController: OTSessionDelegate {
     }
 
     func session(_ session: OTSession, connectionCreated connection: OTConnection) {
+        connectionCount += 1
         let span = traceEvent(operationName: "connectionCreated.event", tags: [:])
         defer { span.finish() }
         
         logger.info("ConnectionId Created \(connection.connectionId)")
+    }
+    
+    func session(_ session: OTSession, connectionDestroyed connection: OTConnection) {
+        connectionCount -= 1
+        logger.info("Connection Id Destroyed: \(connection.connectionId)")
     }
     
     func sessionDidDisconnect(_ session: OTSession) {
@@ -113,7 +139,17 @@ extension VideoViewController: OTSessionDelegate {
         let span = traceEvent(operationName: "streamCreated.event", tags: [:])
         defer { span.finish() }
         
-        doSubscribe(stream)
+        if connectionCount > 2 {
+            logger.info("Connection is greater then 2")
+            session.unsubscribe(subscriber)
+            session.unpublish(publisher)
+            session.disconnect(nil)
+        }
+        
+        if stream.connection.connectionId != session.connection?.connectionId {
+            handleIncomingCall(stream: stream)
+        }
+        
         logger.info("Subscriber connected: \(stream.streamId)")
         
     }

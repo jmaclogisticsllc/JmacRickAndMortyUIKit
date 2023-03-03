@@ -20,6 +20,7 @@
 		E237BA342912CEC6000EE349 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA332912CEC6000EE349 /* Character.swift */; };
 		E237BA372912CF15000EE349 /* RickAndMortyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA362912CF15000EE349 /* RickAndMortyService.swift */; };
 		E237BA392912ECF3000EE349 /* CharacterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA382912ECF3000EE349 /* CharacterViewCell.swift */; };
+		E29749CE29B25EF300A60B18 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29749CD29B25EF300A60B18 /* MainMapViewController.swift */; };
 		E2E5AEF92995BE7D0087F780 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E2E5AEF82995BE7D0087F780 /* Kingfisher */; };
 		E2E5AEFB2996F18E0087F780 /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5AEFA2996F18E0087F780 /* CharacterDetailViewController.swift */; };
 		E2E5AEFD299720C70087F780 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5AEFC299720C70087F780 /* VideoViewController.swift */; };
@@ -67,6 +68,7 @@
 		E237BA362912CF15000EE349 /* RickAndMortyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyService.swift; sourceTree = "<group>"; };
 		E237BA382912ECF3000EE349 /* CharacterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewCell.swift; sourceTree = "<group>"; };
 		E29749C829B23FAC00A60B18 /* JmacRickAndMortyUIKIT.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = JmacRickAndMortyUIKIT.xctestplan; sourceTree = "<group>"; };
+		E29749CD29B25EF300A60B18 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		E2E5AEFA2996F18E0087F780 /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		E2E5AEFC299720C70087F780 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		E524290114C6C83AEE779CDB /* Pods-JmacRickAndMortyUIKITTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JmacRickAndMortyUIKITTests.release.xcconfig"; path = "Target Support Files/Pods-JmacRickAndMortyUIKITTests/Pods-JmacRickAndMortyUIKITTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,8 +153,11 @@
 		E237B9FF2912BA97000EE349 /* JmacRickAndMortyUIKIT */ = {
 			isa = PBXGroup;
 			children = (
+				E29749CC29B25EE000A60B18 /* Map */,
+				E29749CB29B25E5F00A60B18 /* VideoChat */,
+				E29749CA29B25E4C00A60B18 /* Character */,
+				E29749C929B25E3100A60B18 /* Auth */,
 				E237BA352912CEFF000EE349 /* Service */,
-				E237BA322912CEA1000EE349 /* ViewController */,
 				E237BA312912CE85000EE349 /* App */,
 				E237BA302912CE76000EE349 /* Model */,
 				E237BA092912BA99000EE349 /* Assets.xcassets */,
@@ -196,23 +201,45 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		E237BA322912CEA1000EE349 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E237BA042912BA97000EE349 /* CharacterViewController.swift */,
-				E237BA382912ECF3000EE349 /* CharacterViewCell.swift */,
-				E2E5AEFA2996F18E0087F780 /* CharacterDetailViewController.swift */,
-				E2E5AEFC299720C70087F780 /* VideoViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		E237BA352912CEFF000EE349 /* Service */ = {
 			isa = PBXGroup;
 			children = (
 				E237BA362912CF15000EE349 /* RickAndMortyService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		E29749C929B25E3100A60B18 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		E29749CA29B25E4C00A60B18 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				E237BA042912BA97000EE349 /* CharacterViewController.swift */,
+				E237BA382912ECF3000EE349 /* CharacterViewCell.swift */,
+				E2E5AEFA2996F18E0087F780 /* CharacterDetailViewController.swift */,
+			);
+			path = Character;
+			sourceTree = "<group>";
+		};
+		E29749CB29B25E5F00A60B18 /* VideoChat */ = {
+			isa = PBXGroup;
+			children = (
+				E2E5AEFC299720C70087F780 /* VideoViewController.swift */,
+			);
+			path = VideoChat;
+			sourceTree = "<group>";
+		};
+		E29749CC29B25EE000A60B18 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				E29749CD29B25EF300A60B18 /* MainMapViewController.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -462,6 +489,7 @@
 				E237BA392912ECF3000EE349 /* CharacterViewCell.swift in Sources */,
 				E237BA052912BA97000EE349 /* CharacterViewController.swift in Sources */,
 				E2E5AEFD299720C70087F780 /* VideoViewController.swift in Sources */,
+				E29749CE29B25EF300A60B18 /* MainMapViewController.swift in Sources */,
 				E237BA012912BA97000EE349 /* AppDelegate.swift in Sources */,
 				E237BA372912CF15000EE349 /* RickAndMortyService.swift in Sources */,
 				E2E5AEFB2996F18E0087F780 /* CharacterDetailViewController.swift in Sources */,

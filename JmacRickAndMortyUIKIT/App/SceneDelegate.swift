@@ -14,17 +14,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         if let windowScene = scene as? UIWindowScene {
+            
+            let mapVC = MainMapViewController()
+            mapVC.tabBarItem = UITabBarItem(title: "MapView", image: UIImage(systemName: "map"), tag: 0)
             let characterVC = CharacterViewController()
-            characterVC.tabBarItem = UITabBarItem(title: "CharacterView", image: UIImage(systemName: "star"), tag: 0)
+            characterVC.tabBarItem = UITabBarItem(title: "CharacterView", image: UIImage(systemName: "star"), tag: 1)
             
             let videoVC = VideoViewController()
-            videoVC.tabBarItem = UITabBarItem(title: "VideoChat", image: UIImage(systemName: "video"), tag: 1)
+            videoVC.tabBarItem = UITabBarItem(title: "VideoChat", image: UIImage(systemName: "video"), tag: 2)
             
+            let mapNavController = UINavigationController(rootViewController: mapVC)
             let characterNavController = UINavigationController(rootViewController: characterVC)
             let videoNavController = UINavigationController(rootViewController: videoVC)
             
             let tabBarController = UITabBarController()
-            tabBarController.viewControllers = [characterNavController, videoNavController]
+            tabBarController.viewControllers = [mapNavController, characterNavController, videoNavController]
             tabBarController.selectedIndex = 0
             
             let window = UIWindow(windowScene: windowScene)
