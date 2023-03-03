@@ -109,14 +109,6 @@ extension VideoViewController: OTSessionDelegate {
         logger.info("SessionDidConnect sessionId: \(session.sessionId)")
     }
     
-//    func session(_ session: OTSession, streamCreated stream: OTStream) {
-//        subscriber = OTSubscriber(stream: stream, delegate: self)
-//        guard let subscriber = subscriber else { return }
-//        var error: OTError? session.subscribe(subscriber, error: &error)
-//        guard error == nil else { print(error!) return }
-//        guard let subscriberView = subscriber.view else { return }
-//        subscriberView.frame = UIScreen.main.bounds view.insertSubview(subscriberView, at: 0) }
-    
     func session(_ session: OTSession, streamCreated stream: OTStream) {
         let span = traceEvent(operationName: "streamCreated.event", tags: [:])
         defer { span.finish() }

@@ -66,6 +66,7 @@
 		E237BA332912CEC6000EE349 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		E237BA362912CF15000EE349 /* RickAndMortyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyService.swift; sourceTree = "<group>"; };
 		E237BA382912ECF3000EE349 /* CharacterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewCell.swift; sourceTree = "<group>"; };
+		E29749C829B23FAC00A60B18 /* JmacRickAndMortyUIKIT.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = JmacRickAndMortyUIKIT.xctestplan; sourceTree = "<group>"; };
 		E2E5AEFA2996F18E0087F780 /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		E2E5AEFC299720C70087F780 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		E524290114C6C83AEE779CDB /* Pods-JmacRickAndMortyUIKITTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JmacRickAndMortyUIKITTests.release.xcconfig"; path = "Target Support Files/Pods-JmacRickAndMortyUIKITTests/Pods-JmacRickAndMortyUIKITTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		E237B9F42912BA97000EE349 = {
 			isa = PBXGroup;
 			children = (
+				E29749C829B23FAC00A60B18 /* JmacRickAndMortyUIKIT.xctestplan */,
 				E237B9FF2912BA97000EE349 /* JmacRickAndMortyUIKIT */,
 				E237BA162912BA99000EE349 /* JmacRickAndMortyUIKITTests */,
 				E237BA202912BA99000EE349 /* JmacRickAndMortyUIKITUITests */,

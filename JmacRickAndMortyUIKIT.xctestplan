@@ -1,0 +1,52 @@
+{
+  "configurations" : [
+    {
+      "id" : "21CCC828-3933-4320-85B7-1A4B12A07FBA",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "environmentVariableEntries" : [
+      {
+        "key" : "VONAGE_API_KEY",
+        "value" : "47599381"
+      },
+      {
+        "key" : "VONAGE_SESSION_ID",
+        "value" : "2_MX40NzU5OTM4MX5-MTY3NjIyNjE3Mzc5OX5TK0ZaRy9sM0pPSmZyNHRrbXlMQ1lJYTV-fn4"
+      },
+      {
+        "key" : "VONAGE_TOKEN",
+        "value" : "T1==cGFydG5lcl9pZD00NzU5OTM4MSZzaWc9NDk1M2E3MGI0ZGZlYzA4YjRjNjNmZGU3MTliZTVhNjM0NWY0Mjk3YTpzZXNzaW9uX2lkPTJfTVg0ME56VTVPVE00TVg1LU1UWTNOakl5TmpFM016YzVPWDVUSzBaYVJ5OXNNMHBQU21aeU5IUnJiWGxNUTFsSllUVi1mbjQmY3JlYXRlX3RpbWU9MTY3NjIyNjUyNSZub25jZT0wLjgwMTAzNzU2MzcwNjU1ODgmcm9sZT1wdWJsaXNoZXImZXhwaXJlX3RpbWU9MTY3ODgxNDkyNCZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=="
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:JmacRickAndMortyUIKIT.xcodeproj",
+      "identifier" : "E237B9FC2912BA97000EE349",
+      "name" : "JmacRickAndMortyUIKIT"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JmacRickAndMortyUIKIT.xcodeproj",
+        "identifier" : "E237BA122912BA99000EE349",
+        "name" : "JmacRickAndMortyUIKITTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:JmacRickAndMortyUIKIT.xcodeproj",
+        "identifier" : "E237BA1C2912BA99000EE349",
+        "name" : "JmacRickAndMortyUIKITUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
