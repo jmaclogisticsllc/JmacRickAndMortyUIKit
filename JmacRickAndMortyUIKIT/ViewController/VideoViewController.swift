@@ -64,7 +64,6 @@ class VideoViewController: UIViewController {
         defer { span.finish() }
         
         logger.info("Connected to Session:")
-
         session.connect(withToken: token, error: nil)
     }
     
@@ -76,6 +75,69 @@ class VideoViewController: UIViewController {
                 self.present(controller, animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension VideoViewController: OTSessionDelegate {
+    func session(_ session: OTSession, receivedSignalType type: String?, from connection: OTConnection?, with string: String?) {
+        guard let signalString = string else { return }
+        if type == "subscribedConnected" {
+            logger.info("Received signal from the subscriber: \(signalString)")
+        }
+    }
+    
+    func sessionDidConnect(_ session: OTSession) {
+        let span = traceEvent(operationName: "sessionDidConnect()", tags: [:])
+        defer { span.finish() }
+        
+        doPublish()
+        
+        logger.info("SessionDidConnect: \(session.sessionId)")
+    }
+
+    func session(_ session: OTSession, connectionCreated connection: OTConnection) {
+        let span = traceEvent(operationName: "connectionCreated.event", tags: [:])
+        defer { span.finish() }
+        
+        logger.info("ConnectionId Created \(connection.connectionId)")
+    }
+    
+    func sessionDidDisconnect(_ session: OTSession) {
+        let span = traceEvent(operationName: "sessionDidDisconnectt()", tags: [:])
+        defer { span.finish() }
+        
+        logger.info("SessionDidConnect sessionId: \(session.sessionId)")
+    }
+    
+//    func session(_ session: OTSession, streamCreated stream: OTStream) {
+//        subscriber = OTSubscriber(stream: stream, delegate: self)
+//        guard let subscriber = subscriber else { return }
+//        var error: OTError? session.subscribe(subscriber, error: &error)
+//        guard error == nil else { print(error!) return }
+//        guard let subscriberView = subscriber.view else { return }
+//        subscriberView.frame = UIScreen.main.bounds view.insertSubview(subscriberView, at: 0) }
+    
+    func session(_ session: OTSession, streamCreated stream: OTStream) {
+        let span = traceEvent(operationName: "streamCreated.event", tags: [:])
+        defer { span.finish() }
+        
+        doSubscribe(stream)
+        logger.info("Subscriber connected: \(stream.streamId)")
+        
+    }
+    
+    func session(_ session: OTSession, streamDestroyed stream: OTStream) {
+        let span = traceEvent(operationName: "streamDestroyed.event", tags: [:])
+        defer { span.finish() }
+
+        if subscriber?.stream?.streamId == stream.streamId {
+            subscriber?.view?.removeFromSuperview()
+            subscriber = nil
+        }
+    }
+    
+    func session(_ session: OTSession, didFailWithError error: OTError) {
+        print("Error: \(error.localizedDescription)")
     }
 }
 
@@ -92,7 +154,7 @@ extension VideoViewController: OTPublisherDelegate {
         
         logger.info("Publisher View Loaded")
     }
-    
+
     func publisher(_ publisher: OTPublisherKit, streamDestroyed stream: OTStream) {
         logger.info("Publisher Stream Destroyed: \(stream.streamId)")
     }
@@ -135,6 +197,7 @@ extension VideoViewController: OTPublisherDelegate {
 }
 
 extension VideoViewController: OTSubscriberDelegate {
+
     func subscriber(_ subscriber: OTSubscriberKit, didFailWithError error: OTError) {
         print("Subscriber failed for Subscriber: \(error.localizedDescription)")
     }
@@ -148,7 +211,6 @@ extension VideoViewController: OTSubscriberDelegate {
         defer { span.finish() }
         
         addSubscriberView()
-        
         logger.info("Subscriber View Added")
     }
     
@@ -162,6 +224,7 @@ extension VideoViewController: OTSubscriberDelegate {
         defer { span.finish() }
         
         session.subscribe(subscriber!, error: &error)
+        addSubscriberView()
         
         logger.info("Subscriber added to the session")
     }
@@ -186,61 +249,3 @@ extension VideoViewController {
         return span
     }
 }
-
-extension VideoViewController: OTSessionDelegate {
-    
-    func session(_ session: OTSession, receivedSignalType type: String?, from connection: OTConnection?, with string: String?) {
-        
-        guard let signalString = string else { return }
-        if type == "subscribedConnected" {
-            logger.info("Received signal from the subscriber: \(signalString)")
-        }
-    }
-    func sessionDidConnect(_ session: OTSession) {
-        let span = traceEvent(operationName: "sessionDidConnect()", tags: [:])
-        defer { span.finish() }
-        
-        doPublish()
-        
-        logger.info("SessionDidConnect: \(session.sessionId)")
-    }
-    
-    func session(_ session: OTSession, connectionCreated connection: OTConnection) {
-        let span = traceEvent(operationName: "connectionCreated.event", tags: [:])
-        defer { span.finish() }
-        
-        logger.info("ConnectionId Created \(connection.connectionId)")
-    }
-    
-    func sessionDidDisconnect(_ session: OTSession) {
-        let span = traceEvent(operationName: "sessionDidDisconnectt()", tags: [:])
-        defer { span.finish() }
-        
-        logger.info("SessionDidConnect sessionId: \(session.sessionId)")
-    }
-        
-    func session(_ session: OTSession, streamCreated stream: OTStream) {
-        let span = traceEvent(operationName: "streamCreated.event", tags: [:])
-        defer { span.finish() }
-        
-        if subscriber == nil {
-            doSubscribe(stream)
-            logger.info("Subscriber connected: \(stream.streamId)")
-        }
-    }
-    
-    func session(_ session: OTSession, streamDestroyed stream: OTStream) {
-        let span = traceEvent(operationName: "streamDestroyed.event", tags: [:])
-        defer { span.finish() }
-
-        if subscriber?.stream?.streamId == stream.streamId {
-            subscriber?.view?.removeFromSuperview()
-            subscriber = nil
-        }
-    }
-    
-    func session(_ session: OTSession, didFailWithError error: OTError) {
-        print("Error: \(error.localizedDescription)")
-    }
-}
-
