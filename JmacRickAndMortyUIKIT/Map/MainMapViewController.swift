@@ -16,13 +16,14 @@ class MainMapViewController: UIViewController {
     
     lazy var mapView: MKMapView = {
         let map = MKMapView()
-       // map.showsUserLocation = true
+        map.showsUserLocation = true
         map.translatesAutoresizingMaskIntoConstraints = false
         return map
     }()
     
     lazy var searchTextField: UITextField = {
         let searchTextField = UITextField()
+        searchTextField.delegate = self
         searchTextField.layer.cornerRadius = 10
         searchTextField.clipsToBounds = true
         searchTextField.backgroundColor = UIColor.white
@@ -40,11 +41,10 @@ class MainMapViewController: UIViewController {
         // initialize location manager
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        
         locationManager?.requestWhenInUseAuthorization()
+        locationManager?.requestAlwaysAuthorization()
         locationManager?.requestLocation()
         
-        searchTextField.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchTextFieldTapped))
         searchTextField.isUserInteractionEnabled = true
 
@@ -52,8 +52,6 @@ class MainMapViewController: UIViewController {
         
         // Setup the MapUI
         setupUI()
-        
-
     }
     
     func setupUI() {
@@ -76,6 +74,23 @@ class MainMapViewController: UIViewController {
     @objc func searchTextFieldTapped() {
         searchTextField.becomeFirstResponder()
     }
+    
+    private func checkLocationAuthorization() {
+        guard let locationManager = locationManager,
+              let location = locationManager.location else { return }
+        
+        switch locationManager.authorizationStatus {
+            case .authorizedWhenInUse, .authorizedAlways:
+                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 3000, longitudinalMeters: 3000)
+                mapView.setRegion(region, animated: true)
+            case .denied:
+                print("Location services has been denied")
+            case .notDetermined, .restricted:
+                print("Location cannot be determined or restricted")
+            @unknown default:
+                print("Unknown error. Unable to get location")
+        }
+    }
 }
 
 extension MainMapViewController: UITextFieldDelegate {
@@ -90,6 +105,11 @@ extension MainMapViewController: UITextFieldDelegate {
 extension MainMapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+    }
+    
+    // When the location authorization changes do something
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        checkLocationAuthorization()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

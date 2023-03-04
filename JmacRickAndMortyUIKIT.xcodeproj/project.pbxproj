@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		894C6857F93A0033369DDC11 /* Pods_JmacRickAndMortyUIKIT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB80F130AC2CC9C056494B6 /* Pods_JmacRickAndMortyUIKIT.framework */; };
+		0CF60340BC42962C680EE0CB /* Pods_JmacRickAndMortyUIKIT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4BD1356DA4961EAE155CFC /* Pods_JmacRickAndMortyUIKIT.framework */; };
 		E237BA012912BA97000EE349 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA002912BA97000EE349 /* AppDelegate.swift */; };
 		E237BA032912BA97000EE349 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA022912BA97000EE349 /* SceneDelegate.swift */; };
 		E237BA052912BA97000EE349 /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E237BA042912BA97000EE349 /* CharacterViewController.swift */; };
@@ -23,8 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1AB80F130AC2CC9C056494B6 /* Pods_JmacRickAndMortyUIKIT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JmacRickAndMortyUIKIT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		64B50D929E35AF5FCBC63C5F /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JmacRickAndMortyUIKIT.debug.xcconfig"; path = "Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT.debug.xcconfig"; sourceTree = "<group>"; };
+		1ED31C473A780A2547C8DBDD /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JmacRickAndMortyUIKIT.debug.xcconfig"; path = "Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT.debug.xcconfig"; sourceTree = "<group>"; };
+		9A4BD1356DA4961EAE155CFC /* Pods_JmacRickAndMortyUIKIT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JmacRickAndMortyUIKIT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E237B9FD2912BA97000EE349 /* JmacRickAndMortyUIKIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JmacRickAndMortyUIKIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E237BA002912BA97000EE349 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E237BA022912BA97000EE349 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,17 +47,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2E5AEF92995BE7D0087F780 /* Kingfisher in Frameworks */,
-				894C6857F93A0033369DDC11 /* Pods_JmacRickAndMortyUIKIT.framework in Frameworks */,
+				0CF60340BC42962C680EE0CB /* Pods_JmacRickAndMortyUIKIT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		53914A7CC25E2771AB9E7C91 /* Frameworks */ = {
+		23E6EC33C2A4538818DDCD8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1AB80F130AC2CC9C056494B6 /* Pods_JmacRickAndMortyUIKIT.framework */,
+				9A4BD1356DA4961EAE155CFC /* Pods_JmacRickAndMortyUIKIT.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -65,7 +65,7 @@
 		673D491B046A43F3A0B0FE8F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				64B50D929E35AF5FCBC63C5F /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */,
+				1ED31C473A780A2547C8DBDD /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -77,7 +77,7 @@
 				E237B9FF2912BA97000EE349 /* JmacRickAndMortyUIKIT */,
 				E237B9FE2912BA97000EE349 /* Products */,
 				673D491B046A43F3A0B0FE8F /* Pods */,
-				53914A7CC25E2771AB9E7C91 /* Frameworks */,
+				23E6EC33C2A4538818DDCD8F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,11 +171,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E237BA272912BA99000EE349 /* Build configuration list for PBXNativeTarget "JmacRickAndMortyUIKIT" */;
 			buildPhases = (
-				787502A300377467F471C074 /* [CP] Check Pods Manifest.lock */,
+				6386D10901CF4A3BE4109126 /* [CP] Check Pods Manifest.lock */,
 				E237B9F92912BA97000EE349 /* Sources */,
 				E237B9FA2912BA97000EE349 /* Frameworks */,
 				E237B9FB2912BA97000EE349 /* Resources */,
-				1BDDA89BCB99936762293973 /* [CP] Embed Pods Frameworks */,
+				27D207789F459D26C59F8C38 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -214,7 +214,7 @@
 			);
 			mainGroup = E237B9F42912BA97000EE349;
 			packageReferences = (
-				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E237B9FE2912BA97000EE349 /* Products */;
 			projectDirPath = "";
@@ -238,7 +238,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1BDDA89BCB99936762293973 /* [CP] Embed Pods Frameworks */ = {
+		27D207789F459D26C59F8C38 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,7 +255,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JmacRickAndMortyUIKIT/Pods-JmacRickAndMortyUIKIT-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		787502A300377467F471C074 /* [CP] Check Pods Manifest.lock */ = {
+		6386D10901CF4A3BE4109126 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -372,7 +372,7 @@
 		};
 		E237BA282912BA99000EE349 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64B50D929E35AF5FCBC63C5F /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */;
+			baseConfigurationReference = 1ED31C473A780A2547C8DBDD /* Pods-JmacRickAndMortyUIKIT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -382,6 +382,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JmacRickAndMortyUIKIT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "NearMe requires location so it can offer nearby rentals";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "NearMe requires location so it can offer nearby rentals";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -424,7 +425,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -437,7 +438,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		E2E5AEF82995BE7D0087F780 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = E2E5AEF72995BE7D0087F780 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
