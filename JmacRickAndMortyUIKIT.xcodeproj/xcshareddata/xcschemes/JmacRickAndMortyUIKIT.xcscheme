@@ -85,6 +85,16 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "DATA_DOG_RUM_APPLICATION_ID"
+            value = "c828d32df1c21080b97b48e1afb9b4319fb7a846"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "DATA_DOG_CLIENT_TOKEN"
+            value = "pubcc6af16dc8a053b34695ab548898f30f"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "VONAGE_SESSION_ID"
             value = "2_MX40NzU5OTM4MX5-MTY3NjIyNjE3Mzc5OX5TK0ZaRy9sM0pPSmZyNHRrbXlMQ1lJYTV-fn4"
             isEnabled = "YES">

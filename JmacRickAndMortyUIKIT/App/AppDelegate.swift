@@ -7,6 +7,7 @@
 
 import UIKit
 import Datadog
+import Foundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             trackingConsent: .granted,
             configuration: Datadog.Configuration
                 .builderUsing(
-                    rumApplicationID: "556ebaa7979b74aed4eab6b695189a15b136890d",
-                    clientToken: "pub303371640fc47cdb4638a094e0b25286",
+                    rumApplicationID: String(cString: getenv("DATA_DOG_RUM_APPLICATION_ID")),
+                    clientToken: String(cString: getenv("DATA_DOG_CLIENT_TOKEN")),
                     environment: "dev"
                 )
                 .set(endpoint: .us5)
